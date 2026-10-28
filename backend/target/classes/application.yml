@@ -1,0 +1,45 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: ecommerce-platform
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:local}
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    time-zone: Asia/Ho_Chi_Minh
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: method
+
+app:
+  jwt:
+    secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+    expiration-ms: 86400000 # 24 hours
+  cors:
+    allowed-origins: "http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173"
+  payment:
+    vietqr:
+      account-no: "0987654321"
+      account-name: "CTY CO PHAN ECOMMERCE VN"
+      bank-id: "970422" # MBBank / VietinBank BIN
+      template: "compact"
+    vnpay:
+      tmn-code: "ECOMM01"
+      hash-secret: "VNPAYSECRETKEY1234567890ABCDEF"
+      payment-url: "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html"
+  shipping:
+    ghn:
+      token: "mock-ghn-token"
+      shop-id: 12345
+    ghtk:
+      token: "mock-ghtk-token"

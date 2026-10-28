@@ -1,0 +1,52 @@
+-- V5: Marketing & CMS Schema (Vouchers, Flash Sale, Banners)
+CREATE TABLE IF NOT EXISTS vouchers (
+    id BIGSERIAL PRIMARY KEY,
+    code VARCHAR(50) NOT NULL UNIQUE,
+    title VARCHAR(150) NOT NULL,
+    discount_type VARCHAR(20) NOT NULL, -- PERCENTAGE, FIXED_AMOUNT
+    discount_value NUMERIC(15, 2) NOT NULL,
+    min_order_value NUMERIC(15, 2) DEFAULT 0.00,
+    max_discount_amount NUMERIC(15, 2),
+    usage_limit INT DEFAULT 1000,
+    used_count INT DEFAULT 0,
+    start_date TIMESTAMP WITH TIME ZONE NOT NULL,
+    end_date TIMESTAMP WITH TIME ZONE NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    applicable_category_ids JSONB DEFAULT '[]'::jsonb,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_vouchers_code ON vouchers(code);
+
+CREATE TABLE IF NOT EXISTS flash_sales (
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR(150) NOT NULL,
+    start_time TIMESTAMP WITH TIME ZONE NOT NULL,
+    end_time TIMESTAMP WITH TIME ZONE NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS flash_sale_items (
+    id BIGSERIAL PRIMARY KEY,
+    flash_sale_id BIGINT NOT NULL REFERENCES flash_sales(id) ON DELETE CASCADE,
+    variant_id BIGINT NOT NULL REFERENCES product_variants(id) ON DELETE CASCADE,
+    flash_price NUMERIC(15, 2) NOT NULL,
+    quantity_limit INT NOT NULL DEFAULT 50,
+    sold_count INT NOT NULL DEFAULT 0,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE (flash_sale_id, variant_id)
+);
+
+CREATE TABLE IF NOT EXISTS banners (
+    id BIGSERIAL PRIMARY KEY,
+    title VARCHAR(150) NOT NULL,
+    image_url VARCHAR(500) NOT NULL,
+    link_url VARCHAR(500),
+    position VARCHAR(50) DEFAULT 'HOME_HERO', -- HOME_HERO, SIDEBAR, PROMO
+    sort_order INT DEFAULT 0,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
