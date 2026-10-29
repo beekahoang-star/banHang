@@ -80,4 +80,71 @@ export const App: React.FC = () => {
         {adminTab === 'create-product' && <ProductFormDynamic />}
         {adminTab === 'inventory' && <InventoryManager />}
         {adminTab === 'orders' && <OrderManager />}
-        {ad
+        {adminTab === 'marketing' && <MarketingManager />}
+        {adminTab === 'rbac' && <RbacManager />}
+      </AdminLayout>
+    );
+  }
+
+  // 100% Genuine Storefront view
+  return (
+    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900 pb-16 sm:pb-0">
+      {/* Sticky Header with Multi-level Mega Menu & Auto-suggest */}
+      <Navbar
+        currentView={currentView}
+        onNavigate={handleNavigate}
+        megaMenuOpen={megaMenuOpen}
+        setMegaMenuOpen={setMegaMenuOpen}
+      />
+
+      {/* Slide-over Cart */}
+      <CartDrawer onNavigateCheckout={() => handleNavigate('checkout')} />
+
+      {/* Main Page Content */}
+      <main className="flex-1">
+        {currentView === 'home' && <HomePage onNavigate={handleNavigate} />}
+
+        {currentView === 'listing' && (
+          <ProductListingPage
+            initialCategorySlug={viewPayload.categorySlug}
+            initialKeyword={viewPayload.keyword}
+            onNavigate={handleNavigate}
+          />
+        )}
+
+        {currentView === 'product' && (
+          <ProductDetailPage
+            slug={viewPayload.slug || 'iphone-15-pro-max'}
+            onNavigate={handleNavigate}
+          />
+        )}
+
+        {currentView === 'checkout' && (
+          <CheckoutPage onNavigate={handleNavigate} />
+        )}
+
+        {currentView === 'order-success' && (
+          <OrderSuccessPage
+            order={viewPayload.order}
+            onNavigate={handleNavigate}
+          />
+        )}
+      </main>
+
+      {/* Corporate E-commerce Footer with Dedicated Admin Portal link */}
+      <Footer
+        onNavigateAdmin={() => handleNavigate('admin')}
+        onNavigateCategory={(slug) => handleNavigate('listing', { categorySlug: slug })}
+      />
+
+      {/* Mobile Bottom Navigation Bar (Fixed) */}
+      <MobileBottomBar
+        currentView={currentView}
+        onNavigate={handleNavigate}
+        onOpenCategories={() => setMegaMenuOpen(true)}
+      />
+    </div>
+  );
+};
+
+export default App;

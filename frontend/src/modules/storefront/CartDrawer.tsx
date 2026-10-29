@@ -122,8 +122,8 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({ onNavigateCheckout }) =>
                       <h4 className="font-bold text-sm text-slate-800 truncate">
                         {item.productName}
                       </h4>
-                      <p className="text-xs text-slate-400 font-mono mt-0.5">
-                        SKU: {item.skuCode}
+                      <p className="text-xs text-slate-400 mt-0.5">
+                        Mã SP: {item.skuCode}
                       </p>
 
                       {/* Display selected options */}

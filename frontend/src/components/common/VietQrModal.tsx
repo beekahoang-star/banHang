@@ -22,7 +22,7 @@ export const VietQrModal: React.FC<VietQrModalProps> = ({
 
   const bankName = 'MBBank (Quân Đội)';
   const accountNo = '0987654321';
-  const accountName = 'CTY CO PHAN ECOMMERCE VN';
+  const accountName = 'CTY CP THUONG MAI NEXUSTORE';
   const qrUrl = `https://img.vietqr.io/image/970422-${accountNo}-compact2.png?amount=${amount}&addInfo=${orderCode}&accountName=${encodeURIComponent(accountName)}`;
 
   useEffect(() => {

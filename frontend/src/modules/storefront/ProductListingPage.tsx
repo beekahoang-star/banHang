@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import { Category, ProductListItem, AttributeSchemaField } from '../../types';
 import { api } from '../../services/api';
+import { Breadcrumbs } from '../../components/common/Breadcrumbs';
 
 interface ProductListingPageProps {
   initialCategorySlug?: string;
@@ -97,19 +98,20 @@ export const ProductListingPage: React.FC<ProductListingPageProps> = ({
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
       {/* Breadcrumb & Title */}
-      <div className="mb-6">
-        <div className="flex items-center gap-1.5 text-xs text-slate-400">
-          <button onClick={() => onNavigate('home')} className="hover:text-indigo-600">Trang chủ</button>
-          <ChevronRight className="h-3 w-3" />
-          <span className="text-slate-800 font-medium">Danh mục sản phẩm</span>
-          {currentCategoryObj && (
-            <>
-              <ChevronRight className="h-3 w-3" />
-              <span className="text-indigo-600 font-bold">{currentCategoryObj.name}</span>
-            </>
-          )}
-        </div>
-        <div className="mt-2 flex flex-wrap items-center justify-between gap-4">
+      <div className="mb-6 space-y-2">
+        <Breadcrumbs
+          items={[
+            {
+              label: 'Danh mục sản phẩm',
+              onClick: selectedCategory ? () => setSelectedCategory('') : undefined,
+              active: !selectedCategory
+            },
+            ...(currentCategoryObj ? [{ label: currentCategoryObj.name, active: true }] : [])
+          ]}
+          onNavigateHome={() => onNavigate('home')}
+        />
+
+        <div className="flex flex-wrap items-center justify-between gap-4 pt-1">
           <h1 className="text-2xl font-extrabold text-slate-900">
             {currentCategoryObj ? currentCategoryObj.name : 'Tất Cả Sản Phẩm'}
             <span className="ml-2 text-sm font-normal text-slate-400">({products.length} sản phẩm)</span>
@@ -137,13 +139,13 @@ export const ProductListingPage: React.FC<ProductListingPageProps> = ({
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* Left Sidebar: Dynamic Filters */}
+        {/* Left Sidebar: Filters */}
         <div className="space-y-6">
           <div className="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-xs space-y-6">
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
               <div className="flex items-center gap-2 font-bold text-slate-800 text-sm">
                 <SlidersHorizontal className="h-4 w-4 text-indigo-600" />
-                <span>Bộ Lọc Động (JSONB)</span>
+                <span>Bộ Lọc Sản Phẩm</span>
               </div>
               <button
                 onClick={clearAllFilters}
@@ -277,7 +279,7 @@ export const ProductListingPage: React.FC<ProductListingPageProps> = ({
           {loading ? (
             <div className="py-20 text-center">
               <RefreshCw className="mx-auto h-8 w-8 text-indigo-600 animate-spin" />
-              <p className="mt-2 text-xs text-slate-400">Đang truy vấn cơ sở dữ liệu PostgreSQL JSONB...</p>
+              <p className="mt-2 text-xs text-slate-400">Đang tải danh sách sản phẩm...</p>
             </div>
           ) : products.length === 0 ? (
             <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center">
@@ -312,7 +314,7 @@ export const ProductListingPage: React.FC<ProductListingPageProps> = ({
 
                     {p.totalStock > 0 ? (
                       <span className="absolute bottom-2 right-2 rounded-md bg-emerald-500/90 px-1.5 py-0.5 text-[10px] font-bold text-white backdrop-blur-xs">
-                        Còn {p.totalStock} tồn
+                        Còn {p.totalStock} sản phẩm
                       </span>
                     ) : (
                       <span className="absolute bottom-2 right-2 rounded-md bg-slate-800/90 px-1.5 py-0.5 text-[10px] font-bold text-white backdrop-blur-xs">

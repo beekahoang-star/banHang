@@ -6,6 +6,7 @@ import {
 import { ProductDetail, Variant, Review } from '../../types';
 import { api } from '../../services/api';
 import { useCartStore } from '../../stores/cartStore';
+import { Breadcrumbs } from '../../components/common/Breadcrumbs';
 
 interface ProductDetailPageProps {
   slug: string;
@@ -63,7 +64,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ slug, onNa
     return (
       <div className="mx-auto max-w-7xl px-4 py-20 text-center">
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-indigo-600 border-t-transparent mx-auto" />
-        <p className="mt-4 text-xs text-slate-500">Đang nạp chi tiết SPU & biến thể SKU...</p>
+        <p className="mt-4 text-xs text-slate-500">Đang tải thông tin sản phẩm...</p>
       </div>
     );
   }
@@ -134,15 +135,18 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ slug, onNa
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 space-y-12">
       {/* Breadcrumb */}
-      <div className="flex items-center gap-1.5 text-xs text-slate-400">
-        <button onClick={() => onNavigate('home')} className="hover:text-indigo-600">Trang chủ</button>
-        <ChevronRight className="h-3 w-3" />
-        <button onClick={() => onNavigate('listing', { categorySlug: product.category?.slug })} className="hover:text-indigo-600">
-          {product.category?.name}
-        </button>
-        <ChevronRight className="h-3 w-3" />
-        <span className="text-slate-800 font-bold truncate max-w-xs">{product.name}</span>
-      </div>
+      <Breadcrumbs
+        items={[
+          ...(product.category
+            ? [{
+                label: product.category.name,
+                onClick: () => onNavigate('listing', { categorySlug: product.category?.slug })
+              }]
+            : []),
+          { label: product.name, active: true }
+        ]}
+        onNavigateHome={() => onNavigate('home')}
+      />
 
       {/* Main Product Showcase */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -193,7 +197,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ slug, onNa
               <span className="text-slate-300">|</span>
               <span className="text-xs text-slate-500">{product.reviewCount} đánh giá khách hàng</span>
               <span className="text-slate-300">|</span>
-              <span className="font-mono text-xs text-slate-400">SPU ID: #{product.id}</span>
+              <span className="text-xs text-slate-400">Mã SP: #{product.id}</span>
             </div>
 
             <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 leading-tight">
@@ -219,21 +223,21 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ slug, onNa
 
             <div className="mt-2 flex flex-wrap items-center gap-3 text-xs text-slate-600">
               <span className="flex items-center gap-1 font-mono text-slate-500">
-                Mã SKU: <strong className="text-slate-800">{selectedVariant?.skuCode || 'Chưa chọn'}</strong>
+                Mã sản phẩm: <strong className="text-slate-800">{selectedVariant?.skuCode || 'Chưa chọn'}</strong>
               </span>
               <span>•</span>
 
-              {/* Dynamic Stock Display (stock_on_hand - stock_reserved) */}
+              {/* Stock Status */}
               {selectedVariant ? (
                 selectedVariant.availableStock > 0 ? (
                   <span className="inline-flex items-center gap-1 font-semibold text-emerald-600">
                     <Check className="h-3.5 w-3.5" />
-                    <span>Còn {selectedVariant.availableStock} sản phẩm trong kho (Tồn thực: {selectedVariant.stockOnHand}, Đang giữ: {selectedVariant.stockReserved})</span>
+                    <span>Còn lại {selectedVariant.availableStock} sản phẩm sẵn sàng giao</span>
                   </span>
                 ) : (
                   <span className="inline-flex items-center gap-1 font-semibold text-rose-600">
                     <AlertCircle className="h-3.5 w-3.5" />
-                    <span>Hết hàng tạm thời</span>
+                    <span>Tạm hết hàng</span>
                   </span>
                 )
               ) : null}
@@ -358,7 +362,7 @@ export const ProductDetailPage: React.FC<ProductDetailPageProps> = ({ slug, onNa
               activeTab === 'specs' ? 'border-indigo-600 text-indigo-600' : 'border-transparent text-slate-500 hover:text-slate-800'
             }`}
           >
-            Thông Số Kỹ Thuật (JSONB Dynamic Specs)
+            Thông Số Kỹ Thuật Chi Tiết
           </button>
           <button
             onClick={() => setActiveTab('reviews')}

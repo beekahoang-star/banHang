@@ -228,8 +228,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-50 border border-indigo-100 group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                   {getCategoryIcon(cat.slug)}
                 </div>
-                <span className="text-xs font-medium text-slate-400 font-mono">
-                  JSONB Schema
+                <span className="text-xs font-medium text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">
+                  Chính hãng
                 </span>
               </div>
 
@@ -246,7 +246,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate }) => {
               </div>
 
               <div className="mt-4 flex items-center gap-1 text-xs font-semibold text-indigo-600 opacity-0 group-hover:opacity-100 transition">
-                <span>Xem chi tiết bộ lọc</span>
+                <span>Khám phá ngay</span>
                 <ArrowRight className="h-3.5 w-3.5" />
               </div>
             </div>

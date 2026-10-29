@@ -115,7 +115,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigate }) => {
           <ArrowLeft className="h-4 w-4" />
           <span>Quay lại trang chủ</span>
         </button>
-        <span className="text-xs font-mono text-slate-400">Checkout Flow • Chống Bán Lố Bằng @Version</span>
+        <span className="text-xs text-slate-500 font-medium">Bảo mật thanh toán SSL 256-bit</span>
       </div>
 
       <form onSubmit={handlePlaceOrder} className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -245,7 +245,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigate }) => {
               {[
                 {
                   id: 'VIETQR',
-                  name: 'Chuyển khoản VietQR Napas 247 (Tự động xác nhận qua Webhook)',
+                  name: 'Chuyển khoản VietQR Napas 24/7 (Quét mã QR tự động xác nhận)',
                   desc: 'Quét mã QR bằng App ngân hàng bất kỳ, hệ thống tự động duyệt đơn trong 10 giây.',
                   badge: 'Khuyên Dùng'
                 },
@@ -313,7 +313,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigate }) => {
                     />
                     <div className="flex-1 min-w-0">
                       <h5 className="font-bold text-slate-800 truncate">{i.productName}</h5>
-                      <div className="text-[10px] text-slate-400 font-mono">SKU: {i.skuCode}</div>
+                      <div className="text-[10px] text-slate-400">Mã SP: {i.skuCode}</div>
                       <div className="mt-0.5 flex justify-between text-slate-600 font-medium">
                         <span>SL: {i.quantity}</span>
                         <span className="font-bold text-indigo-600">{price.toLocaleString('vi-VN')} đ</span>
@@ -358,7 +358,7 @@ export const CheckoutPage: React.FC<CheckoutPageProps> = ({ onNavigate }) => {
 
             <div className="text-center text-[11px] text-slate-400 flex items-center justify-center gap-1">
               <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" />
-              <span>Cam kết bảo mật & Giữ hàng chống bán lố</span>
+              <span>Cam kết bảo mật & Giao hàng chính hãng 100%</span>
             </div>
           </div>
         </div>

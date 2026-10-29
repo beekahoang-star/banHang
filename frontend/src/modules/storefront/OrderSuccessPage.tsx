@@ -91,12 +91,12 @@ export const OrderSuccessPage: React.FC<OrderSuccessPageProps> = ({ order, onNav
         </p>
       </div>
 
-      {/* Order State Machine Timeline Tracker */}
+      {/* Order Timeline Tracker */}
       <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-xs space-y-4">
         <div className="flex items-center justify-between border-b border-slate-100 pb-3">
           <div className="flex items-center gap-2 font-extrabold text-sm text-slate-900">
             <Clock className="h-4 w-4 text-indigo-600" />
-            <span>Tiến Trình Đơn Hàng (Order State Machine Timeline)</span>
+            <span>Tiến Trình Xử Lý Đơn Hàng</span>
           </div>
           <span className="rounded-full bg-indigo-50 px-3 py-1 font-mono text-[11px] font-bold text-indigo-700">
             Trạng thái hiện tại: {orderData.status}
@@ -138,9 +138,9 @@ export const OrderSuccessPage: React.FC<OrderSuccessPageProps> = ({ order, onNav
         <div className="flex items-center justify-between border-b border-slate-100 pb-3">
           <div className="flex items-center gap-2 font-extrabold text-sm text-slate-900">
             <Package className="h-4 w-4 text-indigo-600" />
-            <span>Sản Phẩm Đã Mua (Lưu Cứng Variant Snapshot JSONB)</span>
+            <span>Chi Tiết Sản Phẩm Đã Mua</span>
           </div>
-          <span className="text-[11px] text-slate-400 font-mono">Bảo toàn dữ liệu lịch sử</span>
+          <span className="text-[11px] text-slate-500 font-medium">Bảo hành chính hãng 12 tháng</span>
         </div>
 
         <div className="space-y-4">
@@ -159,7 +159,7 @@ export const OrderSuccessPage: React.FC<OrderSuccessPageProps> = ({ order, onNav
                 />
                 <div className="flex-1 min-w-0">
                   <h4 className="font-bold text-sm text-slate-900">{snapshot.productName}</h4>
-                  <div className="font-mono text-[11px] text-slate-400 mt-0.5">Mã SKU: {snapshot.skuCode}</div>
+                  <div className="text-[11px] text-slate-400 mt-0.5">Mã SP: {snapshot.skuCode}</div>
                   <div className="text-xs text-slate-600 mt-1">Phân loại: {snapshot.options}</div>
                 </div>
                 <div className="text-right">
